@@ -1,0 +1,76 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="stmarkdown.css">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+</head>
+<h1><a href="#homework-4" id="homework-4">Homework 4</a></h1>
+<h3><a href="#author-jiayi-xue" id="author-jiayi-xue">Author： Jiayi Xue</a></h3>
+<p><strong>Background:</strong></p>
+<p>The website is developed to showcase the graph using simulated data.</p>
+<p><strong>Methods:</strong></p>
+<p>Initially, a dataset with 30 observations was created. Then we generated the age variable using a normal distribution with a mean of 57 years and a standard deviation of 15. Next we alternatively simulate the age variable using a t-distribution. For graphical representation, histograms of the age variable were plotted to visualize and compare the empirical distribution against the theoretical normal distribution curve, which aids in understanding how the age variable is distributed across the simulated observations. Finally, we created html website using command.</p>
+<pre><code>. 
+. clear 
+
+. 
+. // initiate dataset
+. set seed 0425
+
+. set obs 30
+
+. 
+. // generate variables
+. capture drop age age_t
+
+. // normal distribution
+. gen age = (rnormal() * 15) + 57
+
+. // t distribution
+. gen age_t = (rt(_N) * 15) + 57
+
+. 
+. //graphical representation
+. hist age, ///
+&gt;    fcolor(orange%40) /// simulated normal 
+&gt;    addplot(hist age_t, fcolor(midblue%50)) /// simulated t-distribution 
+&gt;    normal /// theoretical normal
+&gt;    legend(on ///
+&gt;       lab(1 &quot;Sampled from Normal&quot;) ///
+&gt;           lab(2 &quot;Theoretical Normal&quot;) ///
+&gt;           lab(3 &quot;Sampled from t-distribution&quot;) ///
+&gt;           )
+
+.           
+. // export plot
+. graph export hw4_jiayi.png, replace
+
+. 
+</code></pre>
+<p><strong>Distribution of Age</strong></p>
+<p><img src="Graph.svg" ></p>
+<pre><code>. display c(N) 
+30
+
+. display c(k)  
+2
+
+. list in 1/5 
+
+     +---------------------+
+     |      age      age_t |
+     |---------------------|
+  1. | 53.67892   44.34772 |
+  2. | 65.75758   62.47927 |
+  3. | 41.89505    66.8978 |
+  4. | 54.30473   48.51558 |
+  5. | 50.82653   59.14367 |
+     +---------------------+
+
+</code></pre>
+<p><strong>Results</strong></p>
+<p>The histogram plot displays the approximate distribution of simulated data derived from normal distribution  $ \text{Age, years} \sim \mathcal{N}(\mu = 57, \sigma^2 = 225) $ and t-distribution, respectively.</p>
+<p><strong>Footnote:</strong> The results are based on simulated data.</p>
